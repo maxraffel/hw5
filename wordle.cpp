@@ -17,7 +17,7 @@ void wordleHelper(
     const std::string& in,
     const std::string& floating,
     const std::set<std::string>& dict,
-    std::string& current,
+    std::string current,
     const int maxLength,
     std::set<std::string>& out);
 
@@ -41,7 +41,7 @@ void wordleHelper(
     const std::string& in,
     const std::string& floating,
     const std::set<std::string>& dict,
-    std::string& current,
+    std::string current,
     const int maxLength,
     std::set<std::string>& out)
 {
@@ -59,17 +59,13 @@ void wordleHelper(
         }
         
         // we will never make a choice that does not match the in string, so don't need to check
-        string copy = current;
-        out.insert(copy);
+        out.insert(current);
     }
 
-    current += '-';
     for (int i = 0; i < 26; ++i) {
         char c = 'a' + i;
-        int lastIndex = current.length() - 1;
         if (in[current.length()] == '-' || in[current.length()] == c) { // only make valid choices, but ignores the floating chars
-            current[lastIndex] = c;
-            wordleHelper(in, floating, dict, current, maxLength, out);
+            wordleHelper(in, floating, dict, current + c, maxLength, out);
         }
     }
 }
