@@ -43,7 +43,7 @@ void wordleHelper(
     std::string current,
     std::set<std::string>& out)
 {
-    cout << current << endl;
+    // cout << current << endl;
     if (in.length() - current.length() < floating.length()) {
         return;
     }
