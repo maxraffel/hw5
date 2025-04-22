@@ -73,6 +73,5 @@ void wordleHelper(
     } else {
         wordleHelper(in, floating, dict, current, out);
     }
-    current.pop_back();
    
 }
