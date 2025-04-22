@@ -21,7 +21,16 @@ static const Worker_T INVALID_ID = (unsigned int)-1;
 
 
 // Add prototypes for any helper functions here
-
+bool scheduleHelper(
+    const AvailabilityMatrix& avail,
+    vector<size_t>& shiftsScheduled,
+    const size_t dailyNeed,
+    const size_t maxShifts,
+    DailySchedule& sched,
+    size_t day,
+    size_t worker,
+    size_t shifts
+);
 
 // Add your implementation of schedule() and other helper functions here
 
