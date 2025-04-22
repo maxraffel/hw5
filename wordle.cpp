@@ -45,6 +45,9 @@ void wordleHelper(
     const int maxLength,
     std::set<std::string>& out)
 {
+    if (maxLength - current.length() > floating.length()) {
+        return;
+    }
     if (current.length() == maxLength) {
         if ( floating.length() != 0 || dict.find(current) == dict.end()) {
             return;
