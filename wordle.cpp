@@ -58,14 +58,19 @@ void wordleHelper(
 
     size_t endIndex = current.length();
     if (in[current.length()] == '-') {
+        bool usedFloating[26] = { false };
         for (int i = 0; i < floating.length(); ++i) { // try floating letters first
             char c = floating.back();
+            usedFloating[c - 'a'] = true;
             string newFloating = floating;
             newFloating.pop_back();
             wordleHelper(in, newFloating, dict, current + c, out);
         }
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
+            if (usedFloating[i]) {
+                continue;
+            }
             size_t index = floating.find(c);
             if (index != std::string::npos) {
                 string newFloating = floating;
