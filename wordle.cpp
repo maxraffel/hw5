@@ -44,8 +44,18 @@ void wordleHelper(
     std::set<std::string>& out)
 {
     // cout << current << endl;
-    if (in.length() - current.length() < floating.length()) {
-        return;
+    if (in.length() - current.length() <= floating.length()) {
+        if (in.length() - current.length() < floating.length()) return;
+        if (floating.length() != 0) {
+            for (int i = 0; i < floating.length(); ++i) { // rest must be from floating
+                char c = floating[i];
+                string newFloating = floating;
+                newFloating.erase(i, 1);
+                wordleHelper(in, newFloating, dict, current + c, out);
+            }
+            return;
+        }
+        
     }
     if (current.length() == in.length()) {
         if (dict.find(current) == dict.end()) {
@@ -58,19 +68,8 @@ void wordleHelper(
 
     size_t endIndex = current.length();
     if (in[current.length()] == '-') {
-        bool usedFloating[26] = { false };
-        for (int i = 0; i < floating.length(); ++i) { // try floating letters first
-            char c = floating.front();
-            usedFloating[c - 'a'] = true;
-            string newFloating = floating;
-            newFloating.erase(0, 1);
-            wordleHelper(in, newFloating, dict, current + c, out);
-        }
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
-            if (usedFloating[i]) {
-                continue;
-            }
             size_t index = floating.find(c);
             if (index != std::string::npos) {
                 string newFloating = floating;
