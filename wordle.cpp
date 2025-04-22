@@ -17,7 +17,7 @@ void wordleHelper(
     const std::string& in,
     const std::string floating,
     const std::set<std::string>& dict,
-    std::string current,
+    std::string& current,
     std::set<std::string>& out);
 
 // Definition of primary wordle function
@@ -40,7 +40,7 @@ void wordleHelper(
     const std::string& in,
     const std::string floating,
     const std::set<std::string>& dict,
-    std::string current,
+    std::string& current,
     std::set<std::string>& out)
 {
     if (in.length() - current.length() < floating.length()) {
@@ -55,32 +55,23 @@ void wordleHelper(
         return;
     }
 
+    current += in[current.length()];
     if (in[current.length()] == '-') {
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
+            current[current.length() - 1] = c;
             int index = floating.find(c);
             if (index != std::string::npos) {
                 string newFloating = floating;
                 newFloating.erase(index, 1);
-                wordleHelper(in, newFloating, dict, current + c, out);
+                wordleHelper(in, newFloating, dict, current, out);
             }
             else {
-                wordleHelper(in, floating, dict, current + c, out);
+                wordleHelper(in, floating, dict, current, out);
             }
         }
     } else {
-        // char c = in[current.length()];
-        // int index = floating.find(c);
-        // if (index != std::string::npos) {
-        //     string newFloating = floating;
-        //     newFloating.erase(index, 1);
-        //     wordleHelper(in, newFloating, dict, current + c, in.length(), out);
-        // }
-        // else {
-        //     wordleHelper(in, floating, dict, current + c, in.length(), out);
-        // }
-        wordleHelper(in, floating, dict, current + in[current.length()], out);
-
+        wordleHelper(in, floating, dict, current, out);
     }
 
    
