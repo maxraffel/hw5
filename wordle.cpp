@@ -60,10 +60,10 @@ void wordleHelper(
     if (in[current.length()] == '-') {
         bool usedFloating[26] = { false };
         for (int i = 0; i < floating.length(); ++i) { // try floating letters first
-            char c = floating.back();
+            char c = floating.front();
             usedFloating[c - 'a'] = true;
             string newFloating = floating;
-            newFloating.pop_back();
+            newFloating.erase(0, 1);
             wordleHelper(in, newFloating, dict, current + c, out);
         }
         for (int i = 0; i < 26; ++i) {
