@@ -59,7 +59,8 @@ void wordleHelper(
         }
         
         // we will never make a choice that does not match the in string, so don't need to check
-        out.insert(current);
+        string copy = current;
+        out.insert(copy);
     }
 
     current += '-';
