@@ -77,14 +77,12 @@ bool scheduleHelper(
     if (avail[day][worker] == false || shiftsScheduled[worker] >= maxShifts) {
         return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts);
     } else {
-        sched[day][worker] = 1;
-        shifts++;
+        sched[day].push_back(worker);
         shiftsScheduled[worker]++;
-        if (scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts)) {
+        if (scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts + 1)) {
             return true;
         } else {
-            sched[day][worker] = 0;
-            shifts--;
+            sched[day].pop_back();
             shiftsScheduled[worker]--;
             return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts);
         }
