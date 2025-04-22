@@ -55,7 +55,7 @@ void wordleHelper(
         return;
     }
 
-    current += in[current.length()];
+    current.push_back(in[current.length()]);
     if (in[current.length()] == '-') {
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
@@ -73,6 +73,6 @@ void wordleHelper(
     } else {
         wordleHelper(in, floating, dict, current, out);
     }
-
+    current.pop_back();
    
 }
