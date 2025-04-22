@@ -46,16 +46,15 @@ void wordleHelper(
     std::set<std::string>& out)
 {
     if (current.length() == maxLength) {
-        string temp = current;
+        int wordsFound = 0;
         for (int i = 0; i < floating.length(); ++i) {
-            size_t index = temp.find(floating[i]);
-            if (index == std::string::npos) {
+            if (current.find(i) == std::string::npos) {
                 return;
             } else {
-                temp[index] = '-';
+                ++wordsFound;
             }
         }
-        if (dict.find(current) == dict.end()) {
+        if (wordsFound < floating.length() || dict.find(current) == dict.end()) {
             return;
         }
         
