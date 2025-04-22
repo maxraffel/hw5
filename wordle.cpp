@@ -45,7 +45,7 @@ void wordleHelper(
     const int maxLength,
     std::set<std::string>& out)
 {
-    if (maxLength - current.length() > floating.length()) {
+    if (maxLength - current.length() < floating.length()) {
         return;
     }
     if (current.length() == maxLength) {
