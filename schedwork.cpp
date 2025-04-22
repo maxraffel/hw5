@@ -64,10 +64,13 @@ bool scheduleHelper(
     size_t shifts
 )
 {
-    if (day == sched.size()){ // we did it!!!
+    if (day == avail.size()){ // we did it!!!
         return true;
     }
-    if (worker >= sched[day].size()){
+    if (day >= sched.size()){
+        sched.push_back(vector<Worker_T>());
+    }
+    if (worker >= avail[day].size()){
         if (shifts == dailyNeed){
             return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day + 1, 0, 0);
         } else {
