@@ -70,16 +70,18 @@ void wordleHelper(
             }
         }
     } else {
-        char c = in[current.length()];
-        int index = floating.find(c);
-        if (index != std::string::npos) {
-            string newFloating = floating;
-            newFloating.erase(index, 1);
-            wordleHelper(in, newFloating, dict, current + c, maxLength, out);
-        }
-        else {
-            wordleHelper(in, floating, dict, current + c, maxLength, out);
-        }
+        // char c = in[current.length()];
+        // int index = floating.find(c);
+        // if (index != std::string::npos) {
+        //     string newFloating = floating;
+        //     newFloating.erase(index, 1);
+        //     wordleHelper(in, newFloating, dict, current + c, maxLength, out);
+        // }
+        // else {
+        //     wordleHelper(in, floating, dict, current + c, maxLength, out);
+        // }
+        wordleHelper(in, floating, dict, current + in[current.length()], maxLength, out);
+
     }
 
    
