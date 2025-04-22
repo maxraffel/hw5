@@ -48,10 +48,8 @@ void wordleHelper(
     if (current.length() == maxLength) {
         
         int floatingCount = 0;
-        for (int i = 0; i < floating.length(); ++i) {
-            if (current.find(floating[i]) == std::string::npos) {
-                return;
-            } else {
+        for (int i = 0; i < current.length(); ++i) {
+            if (floating.find(current[i]) != std::string::npos) {
                 floatingCount++;
             }
         }
