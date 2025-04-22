@@ -15,9 +15,9 @@ using namespace std;
 // Add prototypes of helper functions here
 void wordleHelper(
     const std::string& in,
-    std::string floating,
+    const std::string& floating,
     const std::set<std::string>& dict,
-    std::string current,
+    std::string& current,
     const int maxLength,
     std::set<std::string>& out);
 
@@ -30,9 +30,8 @@ std::set<std::string> wordle(
     // Add your code here
     set<std::string> out;
     string current = "";
-    string newFloating = floating;
 
-    wordleHelper(in, newFloating, dict, current, in.length(), out);
+    wordleHelper(in, floating, dict, current, in.length(), out);
     return out;
 }
 
@@ -40,14 +39,22 @@ std::set<std::string> wordle(
 
 void wordleHelper(
     const std::string& in,
-    const std::string floating,
+    const std::string& floating,
     const std::set<std::string>& dict,
-    std::string current,
+    std::string& current,
     const int maxLength,
     std::set<std::string>& out)
 {
     if (current.length() == maxLength) {
-        if (floating.length() != 0 || dict.find(current) == dict.end()) {
+        int wordsFound = 0;
+        for (int i = 0; i < floating.length(); ++i) {
+            if (current.find(i) == std::string::npos) {
+                return;
+            } else {
+                ++wordsFound;
+            }
+        }
+        if (wordsFound < floating.length() || dict.find(current) == dict.end()) {
             return;
         }
         
@@ -58,15 +65,9 @@ void wordleHelper(
     for (int i = 0; i < 26; ++i) {
         char c = 'a' + i;
         if (in[current.length()] == '-' || in[current.length()] == c) { // only make valid choices, but ignores the floating chars
-            int index = floating.find(c);
-            if (index != string::npos) {
-                string newFloating = floating;
-                newFloating.erase(index, 1);
-                wordleHelper(in, newFloating, dict, current + c, maxLength, out);
-            }
-            else {
-                wordleHelper(in, floating, dict, current + c, maxLength, out);
-            }
+            current += c;
+            wordleHelper(in, floating, dict, current, maxLength, out);
+            current = current.substr(0, current.length() - 1);
         }
     }
 }
