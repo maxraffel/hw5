@@ -55,24 +55,22 @@ void wordleHelper(
         return;
     }
 
-    current.push_back(in[current.length()]);
     if (in[current.length()] == '-') {
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
-            current[current.length() - 1] = c;
             int index = floating.find(c);
             if (index != std::string::npos) {
                 string newFloating = floating;
                 newFloating.erase(index, 1);
-                wordleHelper(in, newFloating, dict, current, out);
+                wordleHelper(in, newFloating, dict, current + c, out);
             }
             else {
-                wordleHelper(in, floating, dict, current, out);
+                wordleHelper(in, floating, dict, current + c, out);
             }
         }
     } else {
-        wordleHelper(in, floating, dict, current, out);
-    }
+        wordleHelper(in, floating, dict, current + in[current.length()], out);
+    } //
 
    
 }
