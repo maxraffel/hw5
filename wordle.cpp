@@ -62,12 +62,13 @@ void wordleHelper(
         out.insert(current);
     }
 
+    current += '-';
     for (int i = 0; i < 26; ++i) {
         char c = 'a' + i;
+        int lastIndex = current.length() - 1;
         if (in[current.length()] == '-' || in[current.length()] == c) { // only make valid choices, but ignores the floating chars
-            current += c;
-            wordleHelper(in, floating, dict, current, maxLength, out);
-            current = current.substr(0, current.length() - 1);
+            current[lastIndex] = c;
+            wordleHelper(in, floating, dict, current + c, maxLength, out);
         }
     }
 }
