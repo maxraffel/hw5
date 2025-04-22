@@ -46,14 +46,19 @@ void wordleHelper(
     std::set<std::string>& out)
 {
     if (current.length() == maxLength) {
+        string temp = current;
+        for (int i = 0; i < floating.length(); ++i) {
+            size_t index = temp.find(floating[i]);
+            if (index == std::string::npos) {
+                return;
+            } else {
+                temp[index] = '-';
+            }
+        }
         if (dict.find(current) == dict.end()) {
             return;
         }
-        for (int i = 0; i < floating.length(); ++i) {
-            if (current.find(floating[i]) == std::string::npos) {
-                return;
-            }
-        }
+        
         // we will never make a choice that does not match the in string, so don't need to check
         out.insert(current);
     }
