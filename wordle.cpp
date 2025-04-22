@@ -43,6 +43,7 @@ void wordleHelper(
     std::string current,
     std::set<std::string>& out)
 {
+    cout << current << endl;
     if (in.length() - current.length() < floating.length()) {
         return;
     }
@@ -55,10 +56,11 @@ void wordleHelper(
         return;
     }
 
+    size_t endIndex = current.length();
     if (in[current.length()] == '-') {
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
-            int index = floating.find(c);
+            size_t index = floating.find(c);
             if (index != std::string::npos) {
                 string newFloating = floating;
                 newFloating.erase(index, 1);
