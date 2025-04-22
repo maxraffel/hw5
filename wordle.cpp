@@ -56,9 +56,9 @@ void wordleHelper(
         out.insert(current);
     }
 
-    for (int i = 0; i < 26; ++i) {
-        char c = 'a' + i;
-        if (in[current.length()] == '-' || in[current.length()] == c) { // only make valid choices, but ignores the floating chars
+    if (in[current.length()] == '-') {
+        for (int i = 0; i < 26; ++i) {
+            char c = 'a' + i;
             int index = floating.find(c);
             if (index != std::string::npos) {
                 string newFloating = floating;
@@ -69,5 +69,18 @@ void wordleHelper(
                 wordleHelper(in, floating, dict, current + c, maxLength, out);
             }
         }
+    } else {
+        char c = in[current.length()];
+        int index = floating.find(c);
+        if (index != std::string::npos) {
+            string newFloating = floating;
+            newFloating.erase(index, 1);
+            wordleHelper(in, newFloating, dict, current + c, maxLength, out);
+        }
+        else {
+            wordleHelper(in, floating, dict, current + c, maxLength, out);
+        }
     }
+
+   
 }
