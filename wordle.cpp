@@ -15,7 +15,7 @@ using namespace std;
 // Add prototypes of helper functions here
 void wordleHelper(
     const std::string& in,
-    const std::string& floating,
+    const std::string floating,
     const std::set<std::string>& dict,
     std::string current,
     const int maxLength,
@@ -39,23 +39,14 @@ std::set<std::string> wordle(
 
 void wordleHelper(
     const std::string& in,
-    const std::string& floating,
+    const std::string floating,
     const std::set<std::string>& dict,
     std::string current,
     const int maxLength,
     std::set<std::string>& out)
 {
     if (current.length() == maxLength) {
-        int floatingCount = 0;
-        string tempFloating = floating;
-        for (int i = 0; i < current.length(); ++i) {
-            int index = tempFloating.find(current[i]);
-            if (index != std::string::npos) {
-                floatingCount++;
-                tempFloating[index] = '-';
-            }
-        }
-        if ( floatingCount < floating.length() || dict.find(current) == dict.end()) {
+        if ( floating.length() != 0 || dict.find(current) == dict.end()) {
             return;
         }
         // we will never make a choice that does not match the in string, so don't need to check
@@ -65,7 +56,15 @@ void wordleHelper(
     for (int i = 0; i < 26; ++i) {
         char c = 'a' + i;
         if (in[current.length()] == '-' || in[current.length()] == c) { // only make valid choices, but ignores the floating chars
-            wordleHelper(in, floating, dict, current + c, maxLength, out);
+            int index = floating.find(c);
+            if (index != std::string::npos) {
+                string newFloating = floating;
+                newFloating.erase(index, 1);
+                wordleHelper(in, newFloating, dict, current + c, maxLength, out);
+            }
+            else {
+                wordleHelper(in, floating, dict, current + c, maxLength, out);
+            }
         }
     }
 }
