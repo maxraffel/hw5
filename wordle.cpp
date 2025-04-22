@@ -13,7 +13,13 @@ using namespace std;
 
 
 // Add prototypes of helper functions here
-
+void wordleHelper(
+    const std::string& in,
+    const std::string& floating,
+    const std::set<std::string>& dict,
+    std::string current,
+    const int maxLength,
+    std::set<std::string>& out);
 
 // Definition of primary wordle function
 std::set<std::string> wordle(
