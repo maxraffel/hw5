@@ -22,7 +22,11 @@ std::set<std::string> wordle(
     const std::set<std::string>& dict)
 {
     // Add your code here
+    set<std::string> out;
+    string current = "";
 
+    wordleHelper(in, floating, dict, current, in.length(), out);
+    return out;
 }
 
 // Define any helper functions here
