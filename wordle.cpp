@@ -68,7 +68,7 @@ void wordleHelper(
         int lastIndex = current.length() - 1;
         if (in[current.length()] == '-' || in[current.length()] == c) { // only make valid choices, but ignores the floating chars
             current[lastIndex] = c;
-            wordleHelper(in, floating, dict, current + c, maxLength, out);
+            wordleHelper(in, floating, dict, current, maxLength, out);
         }
     }
 }
