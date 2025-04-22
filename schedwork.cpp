@@ -37,9 +37,47 @@ bool schedule(
     }
     sched.clear();
     // Add your code below
-
-
-
+    vector<size_t> shiftsScheduled(avail[0].size(), 0);
+    return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, 0, 0, 0);
 
 }
 
+
+
+bool scheduleHelper(
+    const AvailabilityMatrix& avail,
+    vector<size_t>& shiftsScheduled,
+    const size_t dailyNeed,
+    const size_t maxShifts,
+    DailySchedule& sched,
+    size_t day,
+    size_t worker,
+    size_t shifts
+)
+{
+    if (day == sched.size()){ // we did it!!!
+        return true;
+    }
+    if (worker >= sched[day].size()){
+        if (shifts == dailyNeed){
+            return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day + 1, 0, 0);
+        } else {
+            return false;
+        }
+    }
+    if (avail[day][worker] == false || shiftsScheduled[worker] >= maxShifts) {
+        return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts);
+    } else {
+        sched[day][worker] = 1;
+        shifts++;
+        shiftsScheduled[worker]++;
+        if (scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts)) {
+            return true;
+        } else {
+            sched[day][worker] = 0;
+            shifts--;
+            shiftsScheduled[worker]--;
+            return scheduleHelper(avail, shiftsScheduled, dailyNeed, maxShifts, sched, day, worker + 1, shifts);
+        }
+    }
+}
