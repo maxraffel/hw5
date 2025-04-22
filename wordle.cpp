@@ -48,7 +48,7 @@ void wordleHelper(
         return;
     }
     if (current.length() == in.length()) {
-        if ( floating.length() != 0 || dict.find(current) == dict.end()) {
+        if (dict.find(current) == dict.end()) {
             return;
         }
         // we will never make a choice that does not match the in string, so don't need to check
@@ -58,6 +58,12 @@ void wordleHelper(
 
     size_t endIndex = current.length();
     if (in[current.length()] == '-') {
+        for (int i = 0; i < floating.length(); ++i) { // try floating letters first
+            char c = floating.back();
+            string newFloating = floating;
+            newFloating.pop_back();
+            wordleHelper(in, newFloating, dict, current + c, out);
+        }
         for (int i = 0; i < 26; ++i) {
             char c = 'a' + i;
             size_t index = floating.find(c);
