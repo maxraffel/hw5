@@ -17,7 +17,7 @@ void wordleHelper(
     const std::string& in,
     const std::string floating,
     const std::set<std::string>& dict,
-    std::string& current,
+    std::string current,
     std::set<std::string>& out);
 
 // Definition of primary wordle function
@@ -40,7 +40,7 @@ void wordleHelper(
     const std::string& in,
     const std::string floating,
     const std::set<std::string>& dict,
-    std::string& current,
+    std::string current,
     std::set<std::string>& out)
 {
     if (in.length() - current.length() < floating.length()) {
@@ -73,7 +73,6 @@ void wordleHelper(
     } else {
         wordleHelper(in, floating, dict, current, out);
     }
-    current.pop_back();
 
    
 }
