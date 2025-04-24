@@ -67,12 +67,16 @@ void wordleHelper(
             c = 'a' + i;
             size_t index = floating.find(c);
             if (index != std::string::npos) {
+                current.push_back(c);
                 floating.erase(index, 1);
+                wordleHelper(in, floating, dict, current, out);
+                current.pop_back();
+                floating.push_back(c);
+                continue;
             }
             current.push_back(c);
             wordleHelper(in, floating, dict, current, out);
             current.pop_back();
-            floating.push_back(c);
         }
     } else {
         current.push_back(c);
