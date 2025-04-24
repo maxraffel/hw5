@@ -60,7 +60,14 @@ void wordleHelper(
     size_t currLength = current.length();
     size_t inLength = in.length();
     if (currLength == inLength) {
-        if (dict.find(current) == dict.end()) {
+        string tempFloating = floating;
+        for (int i = 0; i < current.length(); ++i) { // rest must be from floating
+            size_t index = floating.find(current[i]);
+            if (index != string::npos) {
+                tempFloating.erase(index, 1);
+            }
+        }
+        if (tempFloating.length() != 0 || dict.find(current) == dict.end()) {
             return;
         }
         out.insert(current);
