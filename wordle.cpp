@@ -77,7 +77,7 @@ void wordleHelper(
             c++;
         }
     } else {
-        wordleHelper(in, floating, dict, current + in[currLength], out);
+        wordleHelper(in, floating, dict, current, out);
     } //
 
    
