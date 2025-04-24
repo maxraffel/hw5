@@ -43,25 +43,12 @@ void wordleHelper(
     std::string& current,
     std::set<std::string>& out)
 {
-    // // cout << current << endl;
-    // if (in.length() - current.length() <= floating.length()) {
-    //     if (in.length() - current.length() < floating.length()) return;
-    //     if (floating.length() != 0) {
-    //         for (int i = 0; i < floating.length(); ++i) { // rest must be from floating
-    //             char c = floating[i];
-    //             string newFloating = floating;
-    //             newFloating.erase(i, 1);
-    //             wordleHelper(in, newFloating, dict, current + c, out);
-    //         }
-    //         return;
-    //     }
-        
-    // }
+
     size_t currLength = current.length();
     size_t inLength = in.length();
     if (currLength == inLength) {
         string tempFloating = floating;
-        for (int i = 0; i < current.length(); ++i) { // rest must be from floating
+        for (int i = 0; i < current.length(); ++i) {
             size_t index = floating.find(current[i]);
             if (index != string::npos) {
                 tempFloating.erase(index, 1);
@@ -75,16 +62,17 @@ void wordleHelper(
     }
 
     char c = in[currLength];
-    current.push_back(c);
     if (c == '-') {
         c = 'a';
         for (int i = 0; i < 26; ++i) {
-            current[currLength] = c;
+            current.push_back(c);
             wordleHelper(in, floating, dict, current, out);
-            c++;
+            current.pop_back();
         }
     } else {
+        current.push_back(c);
         wordleHelper(in, floating, dict, current, out);
+        current.pop_back();
     } //
 
    
