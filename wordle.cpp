@@ -15,9 +15,9 @@ using namespace std;
 // Add prototypes of helper functions here
 void wordleHelper(
     const std::string& in,
-    const std::string floating,
+    const std::string& floating,
     const std::set<std::string>& dict,
-    std::string current,
+    std::string& current,
     std::set<std::string>& out);
 
 // Definition of primary wordle function
@@ -38,50 +38,46 @@ std::set<std::string> wordle(
 
 void wordleHelper(
     const std::string& in,
-    const std::string floating,
+    const std::string& floating,
     const std::set<std::string>& dict,
-    std::string current,
+    std::string& current,
     std::set<std::string>& out)
 {
-    // cout << current << endl;
-    if (in.length() - current.length() <= floating.length()) {
-        if (in.length() - current.length() < floating.length()) return;
-        if (floating.length() != 0) {
-            for (int i = 0; i < floating.length(); ++i) { // rest must be from floating
-                char c = floating[i];
-                string newFloating = floating;
-                newFloating.erase(i, 1);
-                wordleHelper(in, newFloating, dict, current + c, out);
-            }
-            return;
-        }
+    // // cout << current << endl;
+    // if (in.length() - current.length() <= floating.length()) {
+    //     if (in.length() - current.length() < floating.length()) return;
+    //     if (floating.length() != 0) {
+    //         for (int i = 0; i < floating.length(); ++i) { // rest must be from floating
+    //             char c = floating[i];
+    //             string newFloating = floating;
+    //             newFloating.erase(i, 1);
+    //             wordleHelper(in, newFloating, dict, current + c, out);
+    //         }
+    //         return;
+    //     }
         
-    }
-    if (current.length() == in.length()) {
+    // }
+    size_t currLength = current.length();
+    size_t inLength = in.length();
+    if (currLength == inLength) {
         if (dict.find(current) == dict.end()) {
             return;
         }
-        // we will never make a choice that does not match the in string, so don't need to check
         out.insert(current);
         return;
     }
 
-    size_t endIndex = current.length();
-    if (in[current.length()] == '-') {
+    char c = in[currLength];
+    current.push_back(c);
+    if (c == '-') {
+        c = 'a';
         for (int i = 0; i < 26; ++i) {
-            char c = 'a' + i;
-            size_t index = floating.find(c);
-            if (index != std::string::npos) {
-                string newFloating = floating;
-                newFloating.erase(index, 1);
-                wordleHelper(in, newFloating, dict, current + c, out);
-            }
-            else {
-                wordleHelper(in, floating, dict, current + c, out);
-            }
+            current[currLength] = c;
+            wordleHelper(in, floating, dict, current, out);
+            c++;
         }
     } else {
-        wordleHelper(in, floating, dict, current + in[current.length()], out);
+        wordleHelper(in, floating, dict, current + in[currLength], out);
     } //
 
    
