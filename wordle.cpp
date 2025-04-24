@@ -49,7 +49,7 @@ void wordleHelper(
     if (currLength == inLength) {
         string tempFloating = floating;
         for (int i = 0; i < current.length(); ++i) {
-            size_t index = floating.find(current[i]);
+            size_t index = tempFloating.find(current[i]);
             if (index != string::npos) {
                 tempFloating.erase(index, 1);
             }
@@ -63,8 +63,8 @@ void wordleHelper(
 
     char c = in[currLength];
     if (c == '-') {
-        c = 'a';
         for (int i = 0; i < 26; ++i) {
+            c = 'a' + i;
             current.push_back(c);
             wordleHelper(in, floating, dict, current, out);
             current.pop_back();
