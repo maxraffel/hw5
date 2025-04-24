@@ -15,7 +15,7 @@ using namespace std;
 // Add prototypes of helper functions here
 void wordleHelper(
     const std::string& in,
-    const std::string& floating,
+    std::string& floating,
     const std::set<std::string>& dict,
     std::string& current,
     std::set<std::string>& out);
@@ -29,8 +29,9 @@ std::set<std::string> wordle(
     // Add your code here
     set<std::string> out;
     string current = "";
+    string tempFloating = floating;
 
-    wordleHelper(in, floating, dict, current, out);
+    wordleHelper(in, tempFloating, dict, current, out);
     return out;
 }
 
@@ -38,7 +39,7 @@ std::set<std::string> wordle(
 
 void wordleHelper(
     const std::string& in,
-    const std::string& floating,
+    std::string& floating,
     const std::set<std::string>& dict,
     std::string& current,
     std::set<std::string>& out)
@@ -46,15 +47,14 @@ void wordleHelper(
 
     size_t currLength = current.length();
     size_t inLength = in.length();
+    size_t floatLength = floating.length();
+
+    if (floatLength > inLength - currLength) {
+        return;
+    }
+
     if (currLength == inLength) {
-        string tempFloating = floating;
-        for (int i = 0; i < current.length(); ++i) {
-            size_t index = tempFloating.find(current[i]);
-            if (index != string::npos) {
-                tempFloating.erase(index, 1);
-            }
-        }
-        if (tempFloating.length() != 0 || dict.find(current) == dict.end()) {
+        if (floatLength != 0 || dict.find(current) == dict.end()) {
             return;
         }
         out.insert(current);
@@ -65,9 +65,14 @@ void wordleHelper(
     if (c == '-') {
         for (int i = 0; i < 26; ++i) {
             c = 'a' + i;
+            size_t index = floating.find(c);
+            if (index != std::string::npos) {
+                floating.erase(index, 1);
+            }
             current.push_back(c);
             wordleHelper(in, floating, dict, current, out);
             current.pop_back();
+            floating.push_back(c);
         }
     } else {
         current.push_back(c);
